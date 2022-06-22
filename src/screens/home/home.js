@@ -1,5 +1,5 @@
 import { FlatList, Pressable, StatusBar, StyleSheet, TextInput, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import PlanetHeader from "../../components/planet-header/planet-header";
 import { colors } from "../../theme/colors";
 import SafeAreaView from "../../util/safeAreaView";
@@ -27,6 +27,21 @@ const PlanetItem = ({item}) => {
 }
 
 export default function Home({navigation}) {
+  const [list, setList] = useState(PLANET_LIST);
+
+  const filterPlanet = (text) => {
+    if(!text) setList(PLANET_LIST);
+    const planets = PLANET_LIST; 
+    let userTypedText = text.toLowerCase();
+    const filteredList = planets.filter(item => {
+      return item.name.toLowerCase().indexOf(userTypedText) > -1;
+    })
+
+    console.log(userTypedText, filteredList);
+    setList(filteredList);
+  }
+
+
   return (
     <View style={styles.container}>
       <PlanetHeader isHome={true} />
@@ -35,12 +50,12 @@ export default function Home({navigation}) {
           placeholder="Type your planet name.."
           placeholderTextColor={colors.white}
           style={styles.input}
-          onChangeText = {(text) => console.log(text)}
+          onChangeText = {(text) => filterPlanet(text)}
         />
       </View>
       <FlatList
         contentContainerStyle={styles.list}
-        data={PLANET_LIST}
+        data={list}
         keyExtractor={(item) => item.name}
         renderItem={({ item, index }) => {
          return <PlanetItem item={item} navigation={navigation} />

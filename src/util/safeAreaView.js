@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView as RNSafeAreaView, StyleSheet, Platform, StatusBar } from 'react-native'
+import { SafeAreaView as RNSafeAreaView, StyleSheet, Platform, StatusBar } from 'react-native'
 import React, { Children } from 'react'
 
 export default function SafeAreaView({children}) {
